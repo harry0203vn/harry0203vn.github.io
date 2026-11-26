@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huy Ha Hoang (Harry) – IT-Support &amp; Systemadministration</title>
+<meta name="description" content="Portfolio von Huy Ha Hoang: IT-Support und Linux-Systemadministration. Praxisprojekte mit Bash, Docker, Python, Git und Jira Service Management.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gehaeuse: #F2F4F3;
+    --tinte: #1F2A33;
+    --tinte-leise: #4A5864;
+    --konsole: #22303C;
+    --konsole-text: #DCE4EA;
+    --konsole-leise: #93A4B2;
+    --blau: #1F5FAD;
+    --gruen: #2E8B57;
+    --gruen-hell: #6FD39A;
+    --rack: #C9D0D6;
+    --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--gehaeuse);
+    color: var(--tinte);
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  a { color: var(--blau); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  a:focus-visible {
+    outline: 3px solid var(--blau);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .seite {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  /* Kopfzeile */
+  .kopf {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-bottom: 2.5rem;
+  }
+  .kopf p { margin: 0; font-weight: 500; }
+
+  /* Einstieg */
+  h1 {
+    font-size: clamp(2.1rem, 6vw, 3rem);
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .rolle {
+    font-size: 1.25rem;
+    color: var(--tinte-leise);
+    margin: 0.4rem 0 2rem;
+  }
+
+  /* systemctl status – das eine auffällige Element */
+  .status {
+    background: var(--konsole);
+    color: var(--konsole-text);
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    border-radius: 6px;
+    padding: 1.25rem 1.4rem 1.35rem;
+    margin: 0 0 2.25rem;
+  }
+  .status .befehl { color: var(--konsole-leise); margin: 0 0 0.5rem; }
+  .status .befehl span { color: var(--konsole-text); }
+  .status .dienst { margin: 0 0 0.35rem; font-weight: 500; }
+  .status .punkt { color: var(--gruen-hell); }
+  .status dl {
+    display: grid;
+    grid-template-columns: 6.2em 1fr;
+    column-gap: 0.75em;
+    margin: 0;
+  }
+  .status dt { text-align: right; color: var(--konsole-leise); }
+  .status dd { margin: 0; }
+  .status .aktiv { color: var(--gruen-hell); }
+  .status a { color: var(--konsole-text); text-decoration-color: var(--konsole-leise); }
+  .status a:focus-visible { outline-color: var(--konsole-text); }
+  .journal {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0.8rem 0 0;
+    border-top: 1px solid #3A4A58;
+  }
+  .journal li {
+    display: grid;
+    grid-template-columns: 6.2em 1fr;
+    column-gap: 0.75em;
+  }
+  .journal time { text-align: right; color: var(--konsole-leise); }
+
+  .zeile { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .js .zeile { opacity: 0; animation: erscheinen 0.01s steps(1) forwards; }
+    .js .zeile:nth-child(1) { animation-delay: 0.35s; }
+    .js .zeile:nth-child(2) { animation-delay: 0.5s; }
+    .js .zeile:nth-child(3) { animation-delay: 0.65s; }
+    .js .zeile:nth-child(4) { animation-delay: 0.8s; }
+    .js .zeile:nth-child(5) { animation-delay: 0.95s; }
+    .js .zeile:nth-child(6) { animation-delay: 1.1s; }
+    .js .zeile:nth-child(7) { animation-delay: 1.25s; }
+    .js .zeile:nth-child(8) { animation-delay: 1.4s; }
+    @keyframes erscheinen { to { opacity: 1; } }
+  }
+
+  .einleitung { max-width: 38rem; margin: 0; }
+
+  /* Abschnitte */
+  section { margin-top: 3.5rem; }
+  h2 {
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--tinte);
+  }
+
+  /* Projekte als Liste */
+  .projekte { list-style: none; margin: 0; padding: 0; }
+  .projekte li {
+    padding: 1.25rem 0 1.3rem;
+    border-bottom: 1px solid var(--rack);
+  }
+  .projekte h3 {
+    font-size: 1.1875rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.35;
+  }
+  .projekte .kontext {
+    font-size: 0.9375rem;
+    color: var(--tinte-leise);
+    margin: 0.1rem 0 0.5rem;
+  }
+  .projekte p { margin: 0 0 0.5rem; max-width: 38rem; }
+  .projekte .fuss {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.4rem 1.5rem;
+    margin: 0.6rem 0 0;
+    font-size: 0.9375rem;
+  }
+  .werkzeuge { color: var(--tinte-leise); margin: 0; }
+  .ohne-link { color: var(--tinte-leise); font-style: italic; }
+
+  .hauptprojekt h3 { font-size: 1.3125rem; }
+
+  /* Kompetenzen */
+  .kompetenzen {
+    display: grid;
+    grid-template-columns: 13rem 1fr;
+    gap: 0.75rem 1.25rem;
+    margin: 0;
+  }
+  .kompetenzen dt { font-weight: 600; }
+  .kompetenzen dd { margin: 0; }
+
+  /* Zertifikate */
+  .zertifikate { list-style: none; margin: 0; padding: 0; }
+  .zertifikate li {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--rack);
+  }
+  .zertifikate li:last-child { border-bottom: 0; }
+  .zertifikate .jahr { color: var(--tinte-leise); font-variant-numeric: tabular-nums; }
+  .zertifikate .aussteller { display: block; color: var(--tinte-leise); font-size: 0.9375rem; }
+
+  .kontakt p { margin: 0 0 0.6rem; max-width: 38rem; }
+
+  footer {
+    margin-top: 4rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rack);
+    font-size: 0.875rem;
+    color: var(--tinte-leise);
+  }
+  footer p { margin: 0; }
+
+  @media (max-width: 40rem) {
+    .seite { padding-top: 1.25rem; }
+    .kopf { padding-bottom: 1.75rem; }
+    .status { font-size: 0.8125rem; padding: 1rem; margin-left: -0.25rem; margin-right: -0.25rem; }
+    .status dl { grid-template-columns: 5.4em 1fr; }
+    .journal li { grid-template-columns: 1fr; margin-bottom: 0.35rem; }
+    .journal time { text-align: left; }
+    .kompetenzen { grid-template-columns: 1fr; gap: 0.15rem; }
+    .kompetenzen dd { margin-bottom: 0.9rem; }
+    .zertifikate li { grid-template-columns: 3.2rem 1fr; gap: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js');</script>
+<div class="seite">
+
+  <header class="kopf">
+    <p>Portfolio</p>
+    <a href="https://github.com/harry0203vn">GitHub-Profil</a>
+  </header>
+
+  <main>
+    <h1>Huy Ha Hoang (Harry)</h1>
+    <p class="rolle">IT-Support &amp; Systemadministration</p>
+
+    <div class="status" role="region" aria-label="Kurzüberblick im Stil von systemctl status">
+      <p class="befehl" aria-hidden="true">$ <span>systemctl status huy-ha-hoang</span></p>
+      <p class="dienst"><span class="punkt" aria-hidden="true">●</span> huy-ha-hoang.service – IT-Support &amp; Systemadministration</p>
+      <dl>
+        <dt>Loaded:</dt>
+        <dd>Weiterbildung Systemadministration IHK, abgeschlossen 09/2026</dd>
+        <dt>Active:</dt>
+        <dd><span class="aktiv">active (running)</span> – offen für IT-Support (1st/2nd Level) und Junior-Systemadministration</dd>
+        <dt>Region:</dt>
+        <dd>Karlsruhe, Rastatt, Baden-Baden und Umgebung</dd>
+        <dt>Docs:</dt>
+        <dd><a href="https://github.com/harry0203vn">github.com/harry0203vn</a></dd>
+      </dl>
+      <ul class="journal" aria-label="Werdegang in Kürze">
+        <li class="zeile"><time>2016–2019</time><span>IT-Support und Systembetreuung bei Unternehmen in Vietnam</span></li>
+        <li class="zeile"><time>2022–2025</time><span>Ausbildungspraxis in der Systemintegration, Deutschland</span></li>
+        <li class="zeile"><time>2026</time><span>Weiterbildung Systemadministration IHK mit Linux-Praxisprojekt</span></li>
+      </ul>
+    </div>
+
+    <p class="einleitung">Ich unterstütze Anwender bei Hardware-, Software- und Netzwerkproblemen, betreue Windows-Arbeitsplätze und verwalte Benutzer und Berechtigungen. Unter Linux automatisiere ich wiederkehrende Aufgaben mit Bash. Auf dieser Seite finden Sie meine dokumentierten Praxisprojekte.</p>
+
+    <section aria-labelledby="projekte">
+      <h2 id="projekte">Projekte</h2>
+      <ul class="projekte">
+
+        <li class="hauptprojekt">
+          <h3><a href="https://github.com/harry0203vn/IHK-Linux-Project">IHK Linux Sysadmin Lab</a></h3>
+          <p class="kontext">Praxisprojekt der Weiterbildung Systemadministration IHK</p>
+          <p>Unternehmensserver-Verwaltung in einer Ubuntu-Laborumgebung: Benutzer und Gruppen werden per Bash aus einer CSV-Datei angelegt, Zugriffsrechte mit POSIX ACL geregelt und der SSH-Zugang abgesichert. Automatische Backups mit geprüfter Wiederherstellung, Cronjobs, Logging sowie dokumentierte Funktions- und Fehlertests.</p>
+          <div class="fuss">
+            <p class="werkzeuge">Ubuntu, Bash, POSIX ACL, SSH, Cron, Python-Tests, Git</p>
+            <a href="https://github.com/harry0203vn/IHK-Linux-Project">Repository ansehen</a>
+          </div>
+        </li>
+
+        <li>
+          <h3><a href="https://github.com/harry0203vn/docker-service-operations-lab">Docker Service Operations Lab</a></h3>
+          <p class="kontext">Abschlussprojekt Modul 2</p>
+          <p>Betrieb containerisierter Dienste mit Docker Compose: Dienste per Skript starten und stoppen, HTTP-Health-Checks, strukturiertes Logging und Betriebsberichte, die mit Python aus den Logdaten erstellt werden. Getestet mit Normalbetrieb und Fehlerszenarien.</p>
+          <div class="fuss">
+            <p class="werkzeuge">Docker Compose, Nginx, Bash, Python</p>
+            <a href="https://github.com/harry0203vn/docker-service-operations-lab">Repository ansehen</a>
+          </div>
+        </li>
+
+        <li>
+          <h3>IT-Helpdesk mit Jira Service Management</h3>
+          <p class="kontext">Abschlussprojekt Modul 1, für eine fiktive Firma</p>
+          <p>Aufbau eines Service Desks mit Kundenportal: 8 Anfragetypen mit Formularen, 8 Automatisierungen und 10 JQL-Filter. 12 Testtickets wurden vollständig bearbeitet, das Projekt ist auf 57 Seiten dokumentiert.</p>
+          <div class="fuss">
+            <p class="werkzeuge">Jira Service Management, JQL</p>
+            <span class="ohne-link">Dokumentation auf Anfrage</span>
+          </div>
+        </li>
+
+        <li>
+          <h3><a href="https://github.com/harry0203vn/python-it-support-diagnose-tool">IT-Support-Diagnose-Tool</a></h3>
+          <p class="kontext">Konsolenprogramm in Python</p>
+          <p>Menügeführtes Werkzeug für den Support-Alltag: Tickets anlegen und anzeigen, Benutzer- und Inventarlisten aus CSV auswerten, Logdateien durchsuchen und Ordner analysieren, mit Eingabeprüfung und Fehlerbehandlung.</p>
+          <div class="fuss">
+            <p class="werkzeuge">Python, CSV, Logauswertung</p>
+            <a href="https://github.com/harry0203vn/python-it-support-diagnose-tool">Repository ansehen</a>
+          </div>
+        </li>
+
+        <li>
+          <h3><a href="https://github.com/harry0203vn/WSL-Inventory-Teamprojekt">WSL Inventory</a></h3>
+          <p class="kontext">Teamprojekt mit vier Personen</p>
+          <p>Inventarisierung von Linux- und WSL-Arbeitsplätzen: vier Diagnose-Skripte für System, Speicher, Netzwerk sowie Benutzer und Prozesse, die zu einem gemeinsamen Bericht zusammengeführt werden. Entwickelt in Feature-Branches mit Code-Review und Release v1.0.</p>
+          <div class="fuss">
+            <p class="werkzeuge">Bash, Git-Feature-Branches, WSL</p>
+            <a href="https://github.com/harry0203vn/WSL-Inventory-Teamprojekt">Repository ansehen</a>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <section aria-labelledby="kompetenzen">
+      <h2 id="kompetenzen">Was ich einsetze</h2>
+      <dl class="kompetenzen">
+        <dt>Systeme und Support</dt>
+        <dd>Windows und Windows Server, Ubuntu Linux, Active Directory, 1st-Level-Support, Troubleshooting</dd>
+        <dt>Netzwerk und Betrieb</dt>
+        <dd>TCP/IP, SSH, UFW, Benutzer und Gruppen, POSIX ACL, Backup/Restore, Cron, Logging</dd>
+        <dt>Automatisierung und Tools</dt>
+        <dd>Bash, Git/GitHub, Jira Service Management</dd>
+        <dt>Weitere Grundlagen</dt>
+        <dd>Python, Docker, Docker Compose, Nginx</dd>
+      </dl>
+    </section>
+
+    <section aria-labelledby="zertifikate">
+      <h2 id="zertifikate">Zertifikate</h2>
+      <ul class="zertifikate">
+        <li><span class="jahr">2026</span><span>Systemadministration IHK<span class="aussteller">IHK Darmstadt Rhein Main Neckar, Weiterbildung bei Sky-E Red GmbH</span></span></li>
+        <li><span class="jahr">2023</span><span>Google Cybersecurity Professional Certificate<span class="aussteller">Google / Coursera</span></span></li>
+        <li><span class="jahr">2018</span><span>Technical Support Fundamentals<span class="aussteller">Google / Coursera</span></span></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="kontakt" class="kontakt">
+      <h2 id="kontakt">Kontakt</h2>
+      <p>Meine Kontaktdaten finden Sie in meinen Bewerbungsunterlagen.</p>
+      <p>Code und Dokumentation aller Projekte: <a href="https://github.com/harry0203vn">github.com/harry0203vn</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Huy Ha Hoang, 2026. Gehostet mit GitHub Pages.</p>
+  </footer>
+
+</div>
+</body>
+</html>
